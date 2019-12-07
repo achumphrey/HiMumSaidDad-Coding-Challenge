@@ -14,34 +14,32 @@ class BeerDetailsActivity : AppCompatActivity(){
         setContentView(R.layout.beer_detail_activity)
 
         val beerList : BeerModel = intent.getParcelableExtra (INTENT_MESSAGE)
-        tvDescription.text = "Description: \n" + beerList.description + "\n"
+        tvDescription.text = "Description: \n${beerList.description} \n"
 
         tvIngredients.text = "Ingredients:\n"
         var malt:String = ""
         for (i in beerList.ingredients.malt.indices) {
-           malt +=  "Name : " + beerList.ingredients.malt[i].name + "\nAmount : " +
-                   beerList.ingredients.malt[i].amount.value + " " +
-                    beerList.ingredients.malt[i].amount.unit + "\n\n"
+           malt +=  "Name : ${ beerList.ingredients.malt[i].name} " +
+                   "\nAmount : ${beerList.ingredients.malt[i].amount.value}" +
+                   "${beerList.ingredients.malt[i].amount.unit}\n\n"
         }
         tvMalt.text = "Malt :\n$malt"
 
 
         var hops:String = ""
         for (i in beerList.ingredients.hops.indices) {
-            hops +=  "Name : " + beerList.ingredients.hops[i].name + "\nAmount : " +
-                    beerList.ingredients.hops[i].amount.value + " " +
-                    beerList.ingredients.hops[i].amount.unit + "\n" +
-                    "Add : " + beerList.ingredients.hops[i].add + "\n" +
-                    "Attribute : " + beerList.ingredients.hops[i].attribute + "\n\n"
+            hops +=  "Name : ${beerList.ingredients.hops[i].name}" +
+                    "\nAmount : ${beerList.ingredients.hops[i].amount.value} " +
+                    "${beerList.ingredients.hops[i].amount.unit}  \n" +
+                    "Add : ${beerList.ingredients.hops[i].add} \n" +
+                    "Attribute : ${beerList.ingredients.hops[i].attribute} \n\n"
         }
-
         tvHops.text = "Hops :\n$hops"
 
         var foodpairing:String = ""
         for (i in beerList.foodPairing.indices) {
-            foodpairing +=  beerList.foodPairing[i] + "\n"
+            foodpairing +=  "${beerList.foodPairing[i]} \n"
         }
-
         tvFoodPairing.text = "Food Pairing:\n$foodpairing"
 
     }

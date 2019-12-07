@@ -4,10 +4,11 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
-    android:layout_margin="8dp"
-    android:paddingRight="4dp"
-    app:cardElevation="5dp"
-    app:cardCornerRadius="15dp"
+    android:layout_margin="@dimen/dimen_4dp"
+    android:paddingEnd="@dimen/dimen_4dp"
+    android:paddingStart="@dimen/dimen_4dp"
+    app:cardElevation="@dimen/dimen_5dp"
+    app:cardCornerRadius="@dimen/dimen_4dp"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
@@ -15,29 +16,33 @@
         android:id="@+id/row"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:padding="8dp">
+        android:padding="@dimen/dimen_4dp">
 
 
         <TextView
             android:id="@+id/tvABV"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="4dp"
-            android:layout_marginTop="10dp"
-            android:padding="4dp"
-            android:textSize="14sp"
+            android:layout_marginStart="@dimen/dimen_4dp"
+            android:layout_marginTop="@dimen/dimen_8dp"
+            android:padding="@dimen/dimen_4dp"
+            android:textSize="@dimen/text_16sp"
+            android:layout_marginEnd="@dimen/dimen_16dp"
+            app:layout_constraintEnd_toStartOf="@id/imgBeer"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tvBeerName"
             tools:text="Alcohol By Volume (ABV)" />
 
         <TextView
             android:id="@+id/tvBeerName"
-            android:layout_width="200dp"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="4dp"
-            android:layout_marginTop="16dp"
-            android:padding="4dp"
-            android:textSize="14sp"
+            android:layout_marginStart="@dimen/dimen_4dp"
+            android:layout_marginTop="@dimen/dimen_8dp"
+            android:layout_marginEnd="@dimen/dimen_16dp"
+            android:padding="@dimen/dimen_4dp"
+            android:textSize="@dimen/text_16sp"
+            app:layout_constraintEnd_toStartOf="@id/imgBeer"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             tools:text="Beer Name" />
@@ -46,11 +51,9 @@
             android:id="@+id/imgBeer"
             android:layout_width="100dp"
             android:layout_height="70dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginBottom="10dp"
-            android:layout_marginEnd="4dp"
+            android:layout_margin="@dimen/dimen_8dp"
             android:scaleType="fitXY"
+            android:contentDescription="@string/beer_image"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toTopOf="parent"

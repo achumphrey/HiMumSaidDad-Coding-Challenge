@@ -8,7 +8,7 @@ import kotlinx.android.parcel.Parcelize
 @Parcelize
 data class Malt(
     @SerializedName("amount")
-    val amount: AmountX,
+    val amount: Amount,
     @SerializedName("name")
     val name: String
 ):Parcelable
