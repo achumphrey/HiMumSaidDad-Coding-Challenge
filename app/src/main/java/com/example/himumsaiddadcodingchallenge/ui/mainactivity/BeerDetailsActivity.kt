@@ -17,30 +17,30 @@ class BeerDetailsActivity : AppCompatActivity(){
         tvDescription.text = "Description: \n${beerList.description} \n"
 
         tvIngredients.text = "Ingredients:\n"
-        var malt:String = ""
+
+        val maltBuilder = StringBuilder()
         for (i in beerList.ingredients.malt.indices) {
-           malt +=  "Name : ${ beerList.ingredients.malt[i].name} " +
-                   "\nAmount : ${beerList.ingredients.malt[i].amount.value}" +
-                   "${beerList.ingredients.malt[i].amount.unit}\n\n"
+            maltBuilder.append("Name : ${ beerList.ingredients.malt[i].name} " +
+                    "\nAmount : ${beerList.ingredients.malt[i].amount.value}" +
+                    "${beerList.ingredients.malt[i].amount.unit}\n\n")
         }
-        tvMalt.text = "Malt :\n$malt"
+        tvMalt.text = "Malt :\n$maltBuilder"
 
-
-        var hops:String = ""
+        val hopsBuilder = StringBuilder()
         for (i in beerList.ingredients.hops.indices) {
-            hops +=  "Name : ${beerList.ingredients.hops[i].name}" +
+            hopsBuilder.append("Name : ${beerList.ingredients.hops[i].name}" +
                     "\nAmount : ${beerList.ingredients.hops[i].amount.value} " +
                     "${beerList.ingredients.hops[i].amount.unit}  \n" +
                     "Add : ${beerList.ingredients.hops[i].add} \n" +
-                    "Attribute : ${beerList.ingredients.hops[i].attribute} \n\n"
+                    "Attribute : ${beerList.ingredients.hops[i].attribute} \n\n")
         }
-        tvHops.text = "Hops :\n$hops"
+        tvHops.text = "Hops :\n$hopsBuilder"
 
-        var foodpairing:String = ""
+        val foodPairingBuilder = StringBuilder()
         for (i in beerList.foodPairing.indices) {
-            foodpairing +=  "${beerList.foodPairing[i]} \n"
+            foodPairingBuilder.append("${beerList.foodPairing[i]} \n")
         }
-        tvFoodPairing.text = "Food Pairing:\n$foodpairing"
+        tvFoodPairing.text = "Food Pairing:\n$foodPairingBuilder"
 
     }
 
