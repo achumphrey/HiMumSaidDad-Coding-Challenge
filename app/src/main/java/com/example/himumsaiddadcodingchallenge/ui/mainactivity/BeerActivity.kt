@@ -37,9 +37,9 @@ class BeerActivity : AppCompatActivity() {
     }
 
     private val beerClickListener: BeerClickListener = object : BeerClickListener {
-        override fun beerClickListener(beerList: BeerModel) {
+        override fun beerClickListener(beer: BeerModel) {
             intent = Intent(this@BeerActivity, BeerDetailsActivity::class.java)
-            intent.putExtra(INTENT_MESSAGE, beerList)
+            intent.putExtra(INTENT_MESSAGE, beer)
             startActivity(intent)
         }
 
