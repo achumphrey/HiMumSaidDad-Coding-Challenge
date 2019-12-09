@@ -5,7 +5,7 @@ import dagger.Component
 import javax.inject.Singleton
 
 @Singleton
-@Component(modules= [RepositoryModule::class, WebServicesModule::class])
-interface BeerComponent {
+@Component(modules = [RepositoryModule::class, WebServicesModule::class, LocalStorageModule::class])
+interface BeerComponent  {
     fun inject(beerActivity: BeerActivity)
 }

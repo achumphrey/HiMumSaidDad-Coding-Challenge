@@ -1,7 +1,6 @@
 package com.example.himumsaiddadcodingchallenge.viewmodel
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import com.example.himumsaiddadcodingchallenge.data.*
 import com.example.himumsaiddadcodingchallenge.data.repository.Repository
@@ -10,14 +9,11 @@ import com.nhaarman.mockitokotlin2.mock
 import com.nhaarman.mockitokotlin2.verify
 import io.reactivex.Single
 import org.junit.Before
-
-import org.junit.Assert.*
 import org.junit.Rule
 import org.junit.Test
 import org.junit.rules.TestRule
 import org.junit.runner.RunWith
 import org.mockito.Mock
-import org.mockito.Mockito
 import org.mockito.Mockito.`when`
 import org.mockito.junit.MockitoJUnitRunner
 import java.net.UnknownHostException
@@ -32,14 +28,14 @@ class BeerViewModelTest {
     private val beerListLDObserver: Observer<List<BeerModel>> = mock()
     private val errorMessageLDObserver: Observer<String> = mock()
     private val loadingStateLDObserver: Observer<BeerViewModel.LoadingState> = mock()
-    lateinit private var beerModel: BeerModel
+    private lateinit var beerModel: BeerModel
     private var hopList = mutableListOf<Hop>()
     private var maltList = mutableListOf<Malt>()
     private val foodPairing: List<String> = listOf("any", "any")
     private lateinit var ingredients: Ingredients
     private lateinit var amount: Amount
     private lateinit var viewModel: BeerViewModel
-    private val beerList: MutableList<BeerModel> = mutableListOf<BeerModel>()
+    private val beerList: MutableList<BeerModel> = mutableListOf()
 
     @Mock
     lateinit var repository: Repository
@@ -79,7 +75,7 @@ class BeerViewModelTest {
     @Test
     fun fetchBeerList_NoReturnBeer_EmptyList() {
 
-        val beerListEmpty: MutableList<BeerModel> = mutableListOf<BeerModel>()
+        val beerListEmpty: MutableList<BeerModel> = mutableListOf()
 
         `when`(repository.getListOfBeers()).thenReturn(Single.just(beerListEmpty))
 

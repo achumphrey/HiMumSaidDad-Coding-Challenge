@@ -1,15 +1,17 @@
 package com.example.himumsaiddadcodingchallenge.ui.mainactivity
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
+import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.himumsaiddadcodingchallenge.R
 import com.example.himumsaiddadcodingchallenge.data.BeerModel
+import com.example.himumsaiddadcodingchallenge.data.PreferenceHelper
 import com.example.himumsaiddadcodingchallenge.di.DaggerBeerComponent
+import com.example.himumsaiddadcodingchallenge.di.LocalStorageModule
 import com.example.himumsaiddadcodingchallenge.di.RepositoryModule
 import com.example.himumsaiddadcodingchallenge.di.WebServicesModule
 import com.example.himumsaiddadcodingchallenge.ui.adapter.BeerAdapter
@@ -23,14 +25,26 @@ class BeerActivity : AppCompatActivity() {
 
     @Inject
     lateinit var viewModelFactory: BeerViewModelFactory
+
+    @Inject
+    lateinit var preferenceHelper: PreferenceHelper
+
     private lateinit var viewModel: BeerViewModel
     private lateinit var beerAdapter: BeerAdapter
-    companion object{const val INTENT_MESSAGE = "message"}
+
+    companion object {
+        const val INTENT_MESSAGE = "message"
+    }
+
     private val beerClickListener: BeerClickListener = object : BeerClickListener {
         override fun beerClickListener(beerList: BeerModel) {
             intent = Intent(this@BeerActivity, BeerDetailsActivity::class.java)
-            intent.putExtra (INTENT_MESSAGE, beerList)
+            intent.putExtra(INTENT_MESSAGE, beerList)
             startActivity(intent)
+        }
+
+        override fun beerFavoriteChanged(selectedIds: List<Int>) {
+            preferenceHelper.storeFavoriteIds(selectedIds)
         }
     }
 
@@ -73,6 +87,7 @@ class BeerActivity : AppCompatActivity() {
         DaggerBeerComponent.builder()
             .repositoryModule(RepositoryModule())
             .webServicesModule(WebServicesModule())
+            .localStorageModule(LocalStorageModule(application))
             .build()
             .inject(this)
     }
@@ -100,7 +115,8 @@ class BeerActivity : AppCompatActivity() {
 
     private fun setupRecyclerView() {
         rvBeerList.layoutManager = LinearLayoutManager(this)
-        beerAdapter = BeerAdapter(mutableListOf(), beerClickListener)
+        beerAdapter =
+            BeerAdapter(mutableListOf(), beerClickListener, preferenceHelper.getFavorites())
         rvBeerList.adapter = beerAdapter
     }
 

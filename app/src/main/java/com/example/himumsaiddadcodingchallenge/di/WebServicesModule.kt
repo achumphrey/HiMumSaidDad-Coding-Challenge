@@ -1,6 +1,5 @@
 package com.example.himumsaiddadcodingchallenge.di
 
-import android.provider.SyncStateContract
 import com.example.himumsaiddadcodingchallenge.data.remote.WebServices
 import com.example.himumsaiddadcodingchallenge.util.Constants
 import dagger.Module
@@ -17,7 +16,7 @@ class WebServicesModule {
 
     @Singleton
     @Provides
-    fun provideRetrofit(okHttpClient: OkHttpClient): Retrofit{
+    fun provideRetrofit(okHttpClient: OkHttpClient): Retrofit {
         return Retrofit.Builder()
             .baseUrl(Constants.BASE_URL)
             .addConverterFactory(GsonConverterFactory.create())
@@ -28,13 +27,13 @@ class WebServicesModule {
 
     @Singleton
     @Provides
-    fun provideLoggingInterceptor(): HttpLoggingInterceptor{
+    fun provideLoggingInterceptor(): HttpLoggingInterceptor {
         return HttpLoggingInterceptor()
     }
 
     @Singleton
     @Provides
-    fun provideOKHttpClient(loggingInterceptor: HttpLoggingInterceptor): OkHttpClient{
+    fun provideOKHttpClient(loggingInterceptor: HttpLoggingInterceptor): OkHttpClient {
         loggingInterceptor.level = HttpLoggingInterceptor.Level.BODY
         return OkHttpClient.Builder()
             .addInterceptor(loggingInterceptor)

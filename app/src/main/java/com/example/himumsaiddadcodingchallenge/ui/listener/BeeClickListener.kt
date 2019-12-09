@@ -4,4 +4,5 @@ import com.example.himumsaiddadcodingchallenge.data.BeerModel
 
 interface BeerClickListener {
     fun beerClickListener(beer: BeerModel)
+    fun beerFavoriteChanged(selectedIds: List<Int>)
 }
