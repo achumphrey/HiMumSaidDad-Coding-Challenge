@@ -3,4 +3,10 @@
     <string name="error_message">Error Message</string>
     <string name="retry">Retry</string>
     <string name="beer_image">Beer Image</string>
+    <string name="description">Description :\n%1$s\n</string>
+    <string name="ingredients">Ingredients :\n</string>
+    <string name="malt">Malt :\n%1$s</string>
+    <string name="hops">Hops :\n%1$s</string>
+    <string name="food_pairing">Food Pairing :\n%1$s</string>
+    <string name="name_of_beer">Name of Beer: %1$s</string>
 </resources>

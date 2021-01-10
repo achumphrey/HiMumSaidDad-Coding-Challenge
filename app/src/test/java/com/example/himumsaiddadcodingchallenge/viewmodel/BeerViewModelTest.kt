@@ -48,28 +48,37 @@ class BeerViewModelTest {
         hopList.add(Hop( "any", amount,"any", "any"))
         maltList.add(Malt( amount, "any"))
         ingredients = Ingredients( hopList, maltList, "yeast")
-        beerModel = BeerModel(2.0, "any", foodPairing, 10, "any", ingredients, "any")
+        beerModel = BeerModel(
+            2.0,
+            "any",
+            foodPairing,
+            10,
+            "any",
+            ingredients,
+            "any")
+
         beerList.add(beerModel)
 
-        viewModel.beerList.observeForever(beerListLDObserver)
-        viewModel.errorMessage.observeForever(errorMessageLDObserver)
-        viewModel.loadingState.observeForever(loadingStateLDObserver)
+        viewModel.getLDBeerList().observeForever(beerListLDObserver)
+        viewModel.getLDErrorMessage().observeForever(errorMessageLDObserver)
+        viewModel.getLDLoadingState().observeForever(loadingStateLDObserver)
     }
 
     @Test
     fun fetchBeerList_ReturnBeer_WithSuccess() {
 
-        `when`(repository.getListOfBeers()).thenReturn(Single.just(beerList))
+        `when`(repository.getListOfBeers())
+            .thenReturn(Single.just(beerList))
 
         viewModel.fetchBeerList()
 
         verify(repository, atLeast(1)).getListOfBeers()
-        verify(beerListLDObserver, atLeast(1)).onChanged(beerList)
-        verify(errorMessageLDObserver, atLeast(0)).onChanged("Any")
-        verify(
-            loadingStateLDObserver,
-            atLeast(1)
-        ).onChanged(BeerViewModel.LoadingState.SUCCESS)
+        verify(beerListLDObserver, atLeast(1))
+            .onChanged(beerList)
+        verify(errorMessageLDObserver, atLeast(0))
+            .onChanged("Any")
+        verify(loadingStateLDObserver, atLeast(1))
+            .onChanged(BeerViewModel.LoadingState.SUCCESS)
     }
 
     @Test
@@ -77,14 +86,18 @@ class BeerViewModelTest {
 
         val beerListEmpty: MutableList<BeerModel> = mutableListOf()
 
-        `when`(repository.getListOfBeers()).thenReturn(Single.just(beerListEmpty))
+        `when`(repository.getListOfBeers())
+            .thenReturn(Single.just(beerListEmpty))
 
         viewModel.fetchBeerList()
 
         verify(repository, atLeast(1)).getListOfBeers()
-        verify(beerListLDObserver, atLeast(0)).onChanged(emptyList())
-        verify(errorMessageLDObserver, atLeast(1)).onChanged("No Data Found")
-        verify(loadingStateLDObserver, atLeast(1)).onChanged(BeerViewModel.LoadingState.ERROR)
+        verify(beerListLDObserver, atLeast(0))
+            .onChanged(emptyList())
+        verify(errorMessageLDObserver, atLeast(1))
+            .onChanged("No Data Found")
+        verify(loadingStateLDObserver, atLeast(1))
+            .onChanged(BeerViewModel.LoadingState.ERROR)
     }
 
     @Test
@@ -98,21 +111,28 @@ class BeerViewModelTest {
         viewModel.fetchBeerList()
 
         verify(repository, atLeast(1)).getListOfBeers()
-        verify(beerListLDObserver, atLeast(0)).onChanged(null)
-        verify(errorMessageLDObserver, atLeast(1)).onChanged("No Network")
-        verify(loadingStateLDObserver, atLeast(1)).onChanged(BeerViewModel.LoadingState.ERROR)
+        verify(beerListLDObserver, atLeast(0))
+            .onChanged(null)
+        verify(errorMessageLDObserver, atLeast(1))
+            .onChanged("No Network")
+        verify(loadingStateLDObserver, atLeast(1))
+            .onChanged(BeerViewModel.LoadingState.ERROR)
     }
 
     @Test
     fun fetchBeerList_NoReturnBeer_WithError() {
 
-        `when`(repository.getListOfBeers()).thenReturn(Single.error(RuntimeException("Something Wrong")))
+        `when`(repository.getListOfBeers())
+            .thenReturn(Single.error(RuntimeException("Something Wrong")))
 
         viewModel.fetchBeerList()
 
         verify(repository, atLeast(1)).getListOfBeers()
-        verify(beerListLDObserver, atLeast(0)).onChanged(null)
-        verify(errorMessageLDObserver, atLeast(1)).onChanged("Something Wrong")
-        verify(loadingStateLDObserver, atLeast(1)).onChanged(BeerViewModel.LoadingState.ERROR)
+        verify(beerListLDObserver, atLeast(0))
+            .onChanged(null)
+        verify(errorMessageLDObserver, atLeast(1))
+            .onChanged("Something Wrong")
+        verify(loadingStateLDObserver, atLeast(1))
+            .onChanged(BeerViewModel.LoadingState.ERROR)
     }
 }

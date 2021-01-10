@@ -10,9 +10,9 @@ import java.net.UnknownHostException
 class BeerViewModel constructor(private val repository: Repository): ViewModel() {
 
     private val  disposable: CompositeDisposable = CompositeDisposable()
-    val beerList: MutableLiveData<List<BeerModel>> = MutableLiveData()
-    val errorMessage: MutableLiveData<String> = MutableLiveData()
-    val loadingState = MutableLiveData<LoadingState>()
+    private val beerList: MutableLiveData<List<BeerModel>> = MutableLiveData()
+    private val errorMessage: MutableLiveData<String> = MutableLiveData()
+    private val loadingState = MutableLiveData<LoadingState>()
 
     fun fetchBeerList(){
         loadingState.value = LoadingState.LOADING
@@ -42,6 +42,21 @@ class BeerViewModel constructor(private val repository: Repository): ViewModel()
         LOADING,
         SUCCESS,
         ERROR
+    }
+
+    fun getLDBeerList(): MutableLiveData<List<BeerModel>>{
+
+        return beerList
+    }
+
+    fun getLDErrorMessage(): MutableLiveData<String>{
+
+        return errorMessage
+    }
+
+    fun getLDLoadingState(): MutableLiveData<LoadingState>{
+
+        return loadingState
     }
 
     override fun onCleared() {

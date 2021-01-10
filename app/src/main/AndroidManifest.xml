@@ -11,7 +11,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ui.mainactivity.BeerDetailsActivity"></activity>
+        <activity
+            android:name=".ui.mainactivity.BeerDetailsActivity"
+            android:parentActivityName=".ui.mainactivity.BeerActivity"
+            />
         <activity android:name=".ui.mainactivity.BeerActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.example.himumsaiddadcodingchallenge.R
 import com.example.himumsaiddadcodingchallenge.data.BeerModel
 import com.example.himumsaiddadcodingchallenge.ui.mainactivity.BeerActivity.Companion.INTENT_MESSAGE
+import com.google.gson.Gson
 import kotlinx.android.synthetic.main.beer_detail_activity.*
 
 class BeerDetailsActivity : AppCompatActivity(){
@@ -13,18 +14,22 @@ class BeerDetailsActivity : AppCompatActivity(){
         super.onCreate(savedInstanceState)
         setContentView(R.layout.beer_detail_activity)
 
-        val beerList : BeerModel = intent.getParcelableExtra (INTENT_MESSAGE)
-        tvDescription.text = "Description: \n${beerList.description} \n"
+        val gson = Gson()
+        val beerList : BeerModel = gson.fromJson(intent.getStringExtra (INTENT_MESSAGE),
+            BeerModel::class.java)
 
-        tvIngredients.text = "Ingredients:\n"
+        tvDescription.text = getString(R.string.description, beerList.description)
+
+        tvIngredients.text = getString(R.string.ingredients)
 
         val maltBuilder = StringBuilder()
         for (i in beerList.ingredients.malt.indices) {
             maltBuilder.append("Name : ${ beerList.ingredients.malt[i].name} " +
-                    "\nAmount : ${beerList.ingredients.malt[i].amount.value}" +
+                    "\nAmount : ${beerList.ingredients.malt[i].amount.value} " +
                     "${beerList.ingredients.malt[i].amount.unit}\n\n")
         }
-        tvMalt.text = "Malt :\n$maltBuilder"
+
+        tvMalt.text = getString(R.string.malt, maltBuilder)
 
         val hopsBuilder = StringBuilder()
         for (i in beerList.ingredients.hops.indices) {
@@ -34,14 +39,15 @@ class BeerDetailsActivity : AppCompatActivity(){
                     "Add : ${beerList.ingredients.hops[i].add} \n" +
                     "Attribute : ${beerList.ingredients.hops[i].attribute} \n\n")
         }
-        tvHops.text = "Hops :\n$hopsBuilder"
+
+        tvHops.text = getString(R.string.hops, hopsBuilder)
 
         val foodPairingBuilder = StringBuilder()
         for (i in beerList.foodPairing.indices) {
             foodPairingBuilder.append("${beerList.foodPairing[i]} \n")
         }
-        tvFoodPairing.text = "Food Pairing:\n$foodPairingBuilder"
 
+        tvFoodPairing.text = getString(R.string.food_pairing, foodPairingBuilder)
     }
 
 }

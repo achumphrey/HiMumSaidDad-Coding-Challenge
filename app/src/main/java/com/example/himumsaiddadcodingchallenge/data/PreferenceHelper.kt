@@ -5,13 +5,16 @@ import javax.inject.Inject
 
 
 class PreferenceHelper @Inject constructor(private val sharedPreferences: SharedPreferences) {
+
     private val KEY_FAVORITE = "favorites"
 
     fun storeFavoriteIds(favorites: List<Int>) {
+
         write(KEY_FAVORITE, favorites.joinToString())
     }
 
     fun getFavorites(): MutableList<Int> {
+
         val favorites = read(KEY_FAVORITE, "")
         return if (favorites == "") {
             mutableListOf()

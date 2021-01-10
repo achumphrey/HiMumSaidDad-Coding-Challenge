@@ -3,9 +3,8 @@ package com.example.himumsaiddadcodingchallenge.data
 
 import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
-import kotlinx.android.parcel.Parcelize
 
-@Parcelize
+
 data class BeerModel(
     @SerializedName("abv")
     val abv: Double,
@@ -22,4 +21,4 @@ data class BeerModel(
     @SerializedName("name")
     val name: String
 
-):Parcelable
+)

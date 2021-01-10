@@ -18,6 +18,7 @@ import com.example.himumsaiddadcodingchallenge.ui.adapter.BeerAdapter
 import com.example.himumsaiddadcodingchallenge.ui.listener.BeerClickListener
 import com.example.himumsaiddadcodingchallenge.viewmodel.BeerViewModel
 import com.example.himumsaiddadcodingchallenge.viewmodel.BeerViewModelFactory
+import com.google.gson.Gson
 import kotlinx.android.synthetic.main.beer_activity.*
 import javax.inject.Inject
 
@@ -37,9 +38,12 @@ class BeerActivity : AppCompatActivity() {
     }
 
     private val beerClickListener: BeerClickListener = object : BeerClickListener {
+
         override fun beerClickListener(beer: BeerModel) {
+
+            val gson = Gson()
             intent = Intent(this@BeerActivity, BeerDetailsActivity::class.java)
-            intent.putExtra(INTENT_MESSAGE, beer)
+            intent.putExtra(INTENT_MESSAGE, gson.toJson(beer))
             startActivity(intent)
         }
 
@@ -58,16 +62,16 @@ class BeerActivity : AppCompatActivity() {
         viewModel =
             ViewModelProviders.of(this, viewModelFactory).get(BeerViewModel::class.java)
 
-        viewModel.beerList.observe(this, Observer {
+        viewModel.getLDBeerList().observe(this, Observer {
             beerAdapter.updateList(it)
 
         })
 
-        viewModel.errorMessage.observe(this, Observer {
+        viewModel.getLDErrorMessage() .observe(this, Observer {
             tvErrorMessage.text = it
         })
 
-        viewModel.loadingState.observe(this, Observer {
+        viewModel.getLDLoadingState().observe(this, Observer {
             when (it) {
                 BeerViewModel.LoadingState.LOADING -> displayProgressbar()
                 BeerViewModel.LoadingState.SUCCESS -> displayImageList()
@@ -84,6 +88,7 @@ class BeerActivity : AppCompatActivity() {
     }
 
     private fun getDependency() {
+
         DaggerBeerComponent.builder()
             .repositoryModule(RepositoryModule())
             .webServicesModule(WebServicesModule())
@@ -93,6 +98,7 @@ class BeerActivity : AppCompatActivity() {
     }
 
     private fun displayProgressbar() {
+
         prgBar.visibility = View.VISIBLE
         rvBeerList.visibility = View.GONE
         tvErrorMessage.visibility = View.GONE
@@ -100,6 +106,7 @@ class BeerActivity : AppCompatActivity() {
     }
 
     private fun displayErrorMessage() {
+
         tvErrorMessage.visibility = View.VISIBLE
         btnRetry.visibility = View.VISIBLE
         rvBeerList.visibility = View.GONE
@@ -107,6 +114,7 @@ class BeerActivity : AppCompatActivity() {
     }
 
     private fun displayImageList() {
+
         tvErrorMessage.visibility = View.GONE
         btnRetry.visibility = View.GONE
         rvBeerList.visibility = View.VISIBLE
@@ -114,9 +122,15 @@ class BeerActivity : AppCompatActivity() {
     }
 
     private fun setupRecyclerView() {
+
         rvBeerList.layoutManager = LinearLayoutManager(this)
+
         beerAdapter =
-            BeerAdapter(mutableListOf(), beerClickListener, preferenceHelper.getFavorites())
+            BeerAdapter(
+                mutableListOf(),
+                beerClickListener,
+                preferenceHelper.getFavorites())
+
         rvBeerList.adapter = beerAdapter
     }
 

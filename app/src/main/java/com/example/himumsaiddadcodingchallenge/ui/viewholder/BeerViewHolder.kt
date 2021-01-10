@@ -10,7 +10,8 @@ import kotlinx.android.synthetic.main.beer_list_holder.view.*
 
 class BeerViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
     fun bindItem(beerList: BeerModel, listener: BeerClickListener, isBeerFavorite: Boolean) {
-        itemView.tvBeerName.text = "Name of Beer: " + beerList.name
+
+        itemView.tvBeerName.text = String.format("Name of Beer: %s", beerList.name)
         itemView.tvABV.text = String.format("Alcohol By Volume (ABV): %.2f", beerList.abv)
         itemView.imgBeer.loadGlideImage(beerList.imageUrl)
         itemView.setOnClickListener {
